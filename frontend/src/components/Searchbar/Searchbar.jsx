@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import { getImages } from "../../utils/APIRoutes";
 import styles from "./Searchbar.module.css";
 
 function Searchbar() {
@@ -13,7 +14,7 @@ function Searchbar() {
       toast.error("Please enter an id");
     } else {
       setIsBoxEmpty(true);
-      const { data } = axios.get();
+      const { data } = axios.get(getItems);
     }
   };
 
