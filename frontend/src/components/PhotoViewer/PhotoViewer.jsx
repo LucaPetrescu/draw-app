@@ -1,10 +1,13 @@
 import Canvas from "../Canvas/Canvas";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 function PhotoViewer({ image }) {
   return (
-    <>
-      <div>{image ? <Canvas image={image} /> : <p>No image selected</p>}</div>
-    </>
+    <ErrorBoundary>
+      <>
+        <div>{image ? <Canvas image={image} /> : <p>No image selected</p>}</div>
+      </>
+    </ErrorBoundary>
   );
 }
 

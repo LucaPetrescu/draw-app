@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { postImages } from "../../utils/APIRoutes";
 import convertImageToBase64 from "../../utils/convertImageToBase64";
 import generateRandomId from "../../utils/generateRandomId";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 function SaveButton({ originalImage, editedImage }) {
   const [originalImageInBase64, setOriginalImageInBase64] = useState("");
@@ -32,23 +33,25 @@ function SaveButton({ originalImage, editedImage }) {
     toast.success(data);
   };
   return (
-    <>
-      <button className="btn btn-success" onClick={handleOnClick}>
-        Save
-      </button>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </>
+    <ErrorBoundary>
+      <>
+        <button className="btn btn-success" onClick={handleOnClick}>
+          Save
+        </button>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </>
+    </ErrorBoundary>
   );
 }
 export default SaveButton;

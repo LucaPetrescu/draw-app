@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import DrawingMenu from "../DrawingMenu/DrawingMenu";
 import SaveButton from "../SaveButton/SaveButton";
 import styles from "./Canvas.module.css";
@@ -30,7 +31,6 @@ function Canvas({ image }) {
     ctx.lineJoin = "round";
     ctx.strokeStyle = lineColor;
     ctx.lineWidth = lineWidth;
-    //---------------------
   }, [lineColor, lineWidth]);
 
   const startDrawing = (event) => {
@@ -56,42 +56,33 @@ function Canvas({ image }) {
     setIsDrawing(false);
   };
 
-  // const handleDownload = () => {
-  //   const canvas = canvasRef.current;
-  //   const link = document.createElement("a");
-
-  //   const canvasImage = canvas.toDataURL("image/png");
-
-  //   link.href = canvasImage;
-
-  //   link.click();
-  // };
   function editedPhoto() {
     return canvasRef.current?.toDataURL("img/png");
   }
-  console.log(lineColor);
 
   return (
-    <div className={styles.canvasAlignment}>
-      <DrawingMenu
-        setLineColor={setLineColor}
-        setLineWidth={setLineWidth}
-        isEraserOn={isEraserOn}
-        setIsEraserOn={setIsEraserOn}
-      />
-      <canvas
-        ref={canvasRef}
-        width={500} // Adjust the canvas width as needed
-        height={500} // Adjust the canvas height as needed
-        style={{ border: "1px solid #000", background: "transparent" }}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={stopDrawing}
-        onMouseLeave={stopDrawing}
-      />
+    <ErrorBoundary>
+      <div className={styles.canvasAlignment}>
+        <DrawingMenu
+          setLineColor={setLineColor}
+          setLineWidth={setLineWidth}
+          isEraserOn={isEraserOn}
+          setIsEraserOn={setIsEraserOn}
+        />
+        <canvas
+          ref={canvasRef}
+          width={500}
+          height={500}
+          style={{ border: "1px solid #000", background: "transparent" }}
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={stopDrawing}
+          onMouseLeave={stopDrawing}
+        />
 
-      <SaveButton originalImage={image} editedImage={editedPhoto()} />
-    </div>
+        <SaveButton originalImage={image} editedImage={editedPhoto()} />
+      </div>
+    </ErrorBoundary>
   );
 }
 

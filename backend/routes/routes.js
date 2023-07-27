@@ -22,10 +22,18 @@ router.post("/postImages", async (req, res) => {
 });
 
 router.get("/getImages/:imagesId", async (req, res) => {
-  const imagesId = req.params.imagesId;
-  const images = await Drawings.find({ imagesId });
-  console.log(images);
-  res.status(200).send(images);
+  try {
+    const imagesId = req.params.imagesId;
+    const images = await Drawings.find({ imagesId });
+    if (images.length === 0) {
+      throw new Error("No documents with that id found");
+    }
+    console.log(images);
+    res.status(200).send(images);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error);
+  }
 });
 
 module.exports = router;
