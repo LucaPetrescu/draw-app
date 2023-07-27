@@ -21,6 +21,11 @@ router.post("/postImages", async (req, res) => {
   }
 });
 
-router.get("/getImages", async (req, res) => {});
+router.get("/getImages/:imagesId", async (req, res) => {
+  const imagesId = req.params.imagesId;
+  const images = await Drawings.find({ imagesId });
+  console.log(images);
+  res.status(200).send(images);
+});
 
 module.exports = router;
