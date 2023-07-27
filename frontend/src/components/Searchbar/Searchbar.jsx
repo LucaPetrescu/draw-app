@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import styles from "./Searchbar.module.css";
+import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import styles from "./Searchbar.module.css";
 
 function Searchbar() {
   const [value, setValue] = useState("");
@@ -12,6 +13,7 @@ function Searchbar() {
       toast.error("Please enter an id");
     } else {
       setIsBoxEmpty(true);
+      const { data } = axios.get();
     }
   };
 
