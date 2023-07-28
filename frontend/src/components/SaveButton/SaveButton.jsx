@@ -24,6 +24,7 @@ function SaveButton({ originalImage, editedImage }) {
       return;
     }
     const imagesId = generateRandomId();
+
     const { data } = await axios.post(postImages, {
       imagesId,
       editedImage,
